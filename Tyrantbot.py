@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import schedule
 from datetime import datetime, timedelta
 import random
 from asyncio import sleep

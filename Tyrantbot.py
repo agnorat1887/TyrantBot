@@ -60,7 +60,7 @@ async def on_message(message):
         await message.channel.send(f"WE ARE OUT OF MESSAGES!!! WE CANT SEND ANYMORE TODAY @everyone")
         await ussr(bot.get_channel(788161516843171840))                       #Play russia here
 
-    elif bot.count < 0 and not bot.count > -6 and (checkOwnerOrInsurgent(message.author)):
+    elif bot.count < 0 and not bot.count > -6 and not (checkOwnerOrInsurgent(message.author)):
         bot.count -= 1
         await message.channel.send(f"DO NOT PANIC. WE ARE OUT OF MESSAGES. COMMUNISM WILL ENSURE WE WILL HAVE MORE TOMORROW @everyone")
         await message.delete()

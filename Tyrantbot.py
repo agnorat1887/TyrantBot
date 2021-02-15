@@ -110,7 +110,7 @@ async def count(ctx, args):
 @bot.command(pass_context = True)
 async def add(ctx):
     server = ctx.guild
-    if(server.owner.name == ctx.author.name):
+    if(checkOwnerOrInsurgent(ctx.author)):
         bot.count += 1
         await ctx.channel.send(f"Messages set to {bot.count+1}")
     else:

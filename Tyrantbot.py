@@ -127,7 +127,7 @@ async def count(ctx, args):
 @bot.command(pass_context = True)
 async def add(ctx, *, args=None):
     try:
-        if(ctx.author.id == 178350553556844544):
+        if(ctx.author.id == 809265750220210206):
             roll = -1
             if args is None:
                 odds = oddsEquation(1)

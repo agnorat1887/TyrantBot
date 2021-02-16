@@ -1,0 +1,12 @@
+@everyone Alert comrades! Our glorious homeland is being invaded and we must protect it at all costs!
+These insurgents are being swapped around daily and could be any one of us!
+If anyone has any information leading to the capture and purging of this insurgent then we will all be given a choice of award!
+If the insurgent gets caught, then that comrade will be placed in the GULAG for a day and all messages will be silenced until he is released the next day
+The insurgent can be caught when the TYRANT receives a majority vote on who they think the traitor is or if they are kicked for any reason
+
+Notes for the insurgent:
+The ONLY extra BOT command that the insurgent gets is ?add x. where x is any number.
+You have full admin rights and can do whatever you please, weather that is a good or bad is up to you
+Note that the larger the number for x, the more likely they are to get caught and removed for the rest of the day
+For example ?add 8 has about a 50% to be successful and a 50% for the person to be caught. There are no warning or re-dos
+If the insurgent gets destroyed at any point of their day, they will NOT be able to join back until the next day when someone else has access

@@ -3,6 +3,7 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 import random
 from asyncio import sleep
+import numpy
 
 import sys
 
@@ -32,6 +33,16 @@ def checkOwnerOrInsurgent(user):
     else:
         return False
 
+def oddsEquation(x):
+    if x >=28:
+        return .99
+    odd = 5*(((x+.5)**(1/3)-1)/((x+.5)**(1/100)))
+    return odd/10
+
+async def adds(ctx, val):
+    bot.count += val
+    await ctx.channel.send(f"Comrades, the glorious leader had added {val} messages. We have {bot.count+1} in reserves!")
+
 @bot.event
 async def on_ready():
     print("Bot is ready to bot it up")
@@ -44,8 +55,11 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    if message.content == "?reserve":
-        await message.channel.send(f"We have {bot.count+1} messages in reserve")
+    elif message.content == "?reserve":
+        await message.channel.send(f"Comrades, we have {bot.count+1} messages in reserve")
+        return
+
+    elif message.content == "!dc" or message.content == "!rand":
         return
 
     if(utcToEst(message.created_at) > bot.date):
@@ -69,10 +83,12 @@ async def on_message(message):
     elif bot.count ==-6 and not (checkOwnerOrInsurgent(message.author)):
         bot.count -=1
         await message.channel.send(f"@everyone WARNING! COUP DETECTED! PREPARING TO SEND OUT SOVIET HAMMERS!!!")
+        await message.delete()
     
     elif bot.count < -6 and not (checkOwnerOrInsurgent(message.author)):
         await message.author.kick(reason="PARTCIPATED IN THE COUP")
-        await message.channel.send(f"@everyone {message.author} WAS DETECTED IN THE COUP. THEY HAVE MET THE SOVIET HAMMER.")
+        await message.channel.send(f"@everyone {message.author.name} WAS DETECTED IN THE COUP. THEY HAVE MET THE SOVIET HAMMER.")
+        await message.delete()
 
     
     if (bot.count+1) % 5 == 0 and not (checkOwnerOrInsurgent(message.author)) and bot.count>-1:
@@ -103,21 +119,45 @@ async def count(ctx, args):
     if(server.owner.name == ctx.author.name):
         channel = ctx.channel
         bot.count = int(args) - 1
-        await channel.send(f"Messages set to {bot.count+1}")
+        await channel.send(f"Comrades, the TYRANT gave us enough to have {bot.count+1} messages")
     else:
         await ctx.author.kick(reason = "YOU HAVE BEEN CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES")
         await ctx.channel.send((f"@{ctx.author.name} WAS CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES"))
 
 @bot.command(pass_context = True)
-async def add(ctx):
-    server = ctx.guild
-    if(checkOwnerOrInsurgent(ctx.author)):
-        bot.count += 1
-        await ctx.channel.send(f"Messages set to {bot.count+1}")
-    else:
-        await ctx.author.kick(reason="YOU HAVE BEEN CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES")
-        await ctx.channel.send((f"@{ctx.author.name} WAS CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES"))
+async def add(ctx, *, args=None):
+    try:
+        if(ctx.author.id == 178350553556844544):
+            roll = -1
+            if args is None:
+                odds = oddsEquation(1)
+                roll = numpy.random.choice(numpy.arange(0, 2), p=[odds, 1-odds])                                   #run the odds here
+            else:
+                odds = oddsEquation(int(args))
+                roll = numpy.random.choice(numpy.arange(0, 2), p=[odds, 1-odds])
+            
+            if roll == 0:
+                await ctx.author.kick(reason="YOU HAVE BEEN CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES")
+                await ctx.channel.send((f"@{ctx.author.name} WAS CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES"))
+                return
+            elif roll == 1:
+                await adds(ctx, int(args))
+                return
+            else:
+                ctx.channel.send("AN ERROR HAS OCCURED")
+                return
 
+        if args is None:
+            await adds(ctx, 1)
+        elif(checkOwnerOrInsurgent(ctx.author)):
+                await adds(ctx, int(args))
+        else:
+            await ctx.author.kick(reason="YOU HAVE BEEN CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES")
+            await ctx.channel.send((f"@{ctx.author.name} WAS CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES"))
+
+    except ValueError:
+        await ctx.channel.send("Please enter a whole number")
+        return
 @bot.command(pass_context = True)
 async def roll(ctx, *, args):
     args = args.split()

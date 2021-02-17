@@ -72,17 +72,17 @@ async def on_message(message):
 
     elif bot.count == 0 and not (checkOwnerOrInsurgent(message.author)):
         bot.count -= 1
-        await message.channel.send(f"WE ARE OUT OF MESSAGES!!! WE CANT SEND ANYMORE TODAY @everyone")
+        await message.channel.send(f"COMRADES WE ARE OUT OF MESSAGES!!! WE CANT SEND ANYMORE TODAY @everyone")
         await ussr(bot.get_channel(788161516843171840))                       #Play russia here
 
     elif bot.count < 0 and bot.count > -6 and not (checkOwnerOrInsurgent(message.author)):
         bot.count -= 1
-        await message.channel.send(f"DO NOT PANIC. WE ARE OUT OF MESSAGES. COMMUNISM WILL ENSURE WE WILL HAVE MORE TOMORROW @everyone")
+        await message.channel.send(f"DO NOT PANIC COMRADES. WE ARE OUT OF MESSAGES. COMMUNISM WILL ENSURE WE WILL HAVE MORE TOMORROW @everyone")
         await message.delete()
 
     elif bot.count ==-6 and not (checkOwnerOrInsurgent(message.author)):
         bot.count -=1
-        await message.channel.send(f"@everyone WARNING! COUP DETECTED! PREPARING TO SEND OUT SOVIET HAMMERS!!!")
+        await message.channel.send(f"@everyone WARNING COMRADES! COUP DETECTED! PREPARING TO SEND OUT SOVIET HAMMERS!!!")
         await message.delete()
     
     elif bot.count < -6 and not (checkOwnerOrInsurgent(message.author)):
@@ -96,7 +96,7 @@ async def on_message(message):
             bot.count -= 1
             return
             
-        await message.channel.send(f"ALERT!!!  We only have {bot.count+1} messages in reserve! @everyone")
+        await message.channel.send(f"ALERT COMRADES!!!  We only have {bot.count+1} messages in reserve! @everyone")
 
 
     await bot.process_commands(message)
@@ -144,13 +144,13 @@ async def add(ctx, *, args=None):
                 await adds(ctx, int(args))
                 return
             else:
-                ctx.channel.send("AN ERROR HAS OCCURED")
+                await ctx.channel.send("AN ERROR HAS OCCURED")
                 return
 
         if args is None:
             await adds(ctx, 1)
         elif(checkOwnerOrInsurgent(ctx.author)):
-                await adds(ctx, int(args))
+            await adds(ctx, int(args))
         else:
             await ctx.author.kick(reason="YOU HAVE BEEN CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES")
             await ctx.channel.send((f"@{ctx.author.name} WAS CAUGHT TRYING TO INFILTRATE THE TYRANTS RESERVES"))

@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='?', intents=intents)
 startdate = datetime.utcnow() - timedelta(hours=5)
 print(startdate)
 
-bot.count  = 19
+bot.count  = 24
 bot.word = ""
 bot.date = (startdate - timedelta(hours=startdate.hour, minutes=startdate.minute, seconds=startdate.second, microseconds=startdate.microsecond)) + timedelta(days = 1)
 
@@ -36,7 +36,7 @@ def checkOwnerOrInsurgent(user):
 def oddsEquation(x):
     if x >=28:
         return .99
-    odd = 5*(((x+.5)**(1/3)-1)/((x+.5)**(1/100)))
+    odd = (5*(((x+.5)**(1/3)-1)/((x+.5)**(1/100))))-.25
     return odd/10
 
 async def adds(ctx, val):
@@ -64,7 +64,7 @@ async def on_message(message):
 
     if(utcToEst(message.created_at) > bot.date):
         bot.date = round_date(message.created_at)
-        bot.count = 20
+        bot.count = 24
 
     if bot.count > 0  and not (checkOwnerOrInsurgent(message.author)):
         bot.count -= 1
